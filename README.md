@@ -1,1 +1,1 @@
-[![Deploy](https://github.com/tzer0m/PersonalSite/actions/workflows/deploy.yml/badge.svg)](https://github.com/tzer0m/PersonalSite/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/tzer0m/PersonalSite/actions/workflows/deploy.yml/badge.svg)](https://github.com/tzer0m/PersonalSite/actions/workflows/deploy.yml) [![Dependabot](https://github.com/tzer0m/PersonalSite/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/tzer0m/PersonalSite/actions/workflows/dependabot/dependabot-updates)
