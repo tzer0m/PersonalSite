@@ -4,7 +4,7 @@ using PersonalSite.Models;
 namespace PersonalSite.Services
 {
     /// <summary>
-    /// Loads the world reference data, map and travel lists from the Data folder.
+    /// Loads the world reference data, map and visited list from the Data folder.
     /// </summary>
     /// <param name="logger">The logger.</param>
     public class WorldAtlas(ILogger<WorldAtlas> logger)
@@ -28,12 +28,7 @@ namespace PersonalSite.Services
         /// <summary>
         /// The visited countries, ordered by name.
         /// </summary>
-        public List<Country> Visited => field ??= Resolve(travel.Visited, "visited");
-
-        /// <summary>
-        /// The bucket list countries that haven't been visited yet, ordered by name.
-        /// </summary>
-        public List<Country> BucketList => field ??= [.. Resolve(travel.BucketList, "bucketList").Except(Visited)];
+        public List<Country> Visited => field ??= Resolve(travel.Visited);
 
         /// <summary>
         /// Deserialises a JSON file from the Data folder.
@@ -46,12 +41,11 @@ namespace PersonalSite.Services
         /// Maps country codes to countries, logging any codes that aren't recognised.
         /// </summary>
         /// <param name="codes">The country codes.</param>
-        /// <param name="list">The list name, used in the warning.</param>
-        private List<Country> Resolve(List<string> codes, string list)
+        private List<Country> Resolve(List<string> codes)
         {
             List<string> unknown = [.. codes.Where(code => !Countries.Any(country => country.Code.Equals(code, StringComparison.OrdinalIgnoreCase)))];
             if (unknown.Count > 0)
-                logger.LogWarning("Unknown country codes in {List}: {Codes}", list, string.Join(", ", unknown));
+                logger.LogWarning("Unknown country codes in countries.json: {Codes}", string.Join(", ", unknown));
             return [.. Countries.Where(country => codes.Contains(country.Code, StringComparer.OrdinalIgnoreCase))];
         }
     }

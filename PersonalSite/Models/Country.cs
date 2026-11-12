@@ -14,10 +14,5 @@ namespace PersonalSite.Models
         /// The common English name.
         /// </summary>
         public string Name { get; set; } = string.Empty;
-
-        /// <summary>
-        /// The continent the country belongs to.
-        /// </summary>
-        public string Continent { get; set; } = string.Empty;
     }
 }

@@ -9,6 +9,7 @@
     --color-accent: #e8a33d;
     --color-status: #7fae6f;
     --color-land: #262d3a;
+    --color-ocean: #161b24;
     --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace;
 }
 
@@ -203,7 +204,7 @@ main {
 }
 
 .stat {
-    color: var(--color-status);
+    color: var(--color-accent);
     font-weight: 700;
 }
 
@@ -225,14 +226,23 @@ main {
     border-bottom: 1px dashed var(--color-frame);
 }
 
-/* Map */
+/* Map views */
 .map-wrap {
     margin: 0 -8px;
 }
 
-.world-map {
+.map-view[hidden] {
+    display: none;
+}
+
+.world-map,
+.world-globe {
     display: block;
     width: 100%;
+    aspect-ratio: 1000 / 476;
+}
+
+.world-map {
     height: auto;
 }
 
@@ -258,68 +268,98 @@ main {
         stroke-width: 1;
     }
 
-.legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 24px;
-    margin: 12px 0 0;
+.globe-view {
+    position: relative;
 }
 
-.legend-item {
+.world-globe {
+    cursor: grab;
+    touch-action: none;
+}
+
+    .world-globe.dragging {
+        cursor: grabbing;
+    }
+
+.globe-tip {
+    position: absolute;
+    padding: 2px 8px;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-frame);
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translate(12px, -50%);
+}
+
+/* Legend and view toggle */
+.map-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: 12px;
+}
+
+.legend {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    margin: 0;
 }
 
 .swatch {
     display: inline-block;
     width: 12px;
     height: 12px;
-}
-
-.swatch-visited {
-    background-color: var(--color-status);
-}
-
-.swatch-bucket {
     background-color: var(--color-accent);
 }
 
-/* Lists */
-.continent-list,
-.country-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.map-toggle {
+    display: inline-flex;
 }
 
-    .continent-list li {
-        display: grid;
-        grid-template-columns: 16ch auto 1fr;
-        gap: 16px;
-        line-height: 1.6;
+.toggle-button {
+    padding: 4px 12px;
+    font: inherit;
+    color: var(--color-text-muted);
+    background: none;
+    border: 1px solid var(--color-frame);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+    .toggle-button + .toggle-button {
+        border-left: 0;
     }
 
-.bar {
-    white-space: pre;
-}
+    .toggle-button:hover {
+        color: var(--color-text);
+    }
 
-.bar-filled {
-    color: var(--color-status);
-}
+    .toggle-button[aria-pressed="true"] {
+        color: var(--color-accent);
+        box-shadow: inset 0 -2px 0 var(--color-accent);
+    }
 
+    .toggle-button:focus-visible {
+        outline: 1px dashed var(--color-accent);
+        outline-offset: 2px;
+    }
+
+/* Visited list */
 .country-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(26ch, 1fr));
     gap: 2px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     line-height: 1.6;
 }
 
 .mark-visited {
-    color: var(--color-status);
-}
-
-.mark-bucket {
     color: var(--color-accent);
 }
 
@@ -331,19 +371,14 @@ main {
         font-size: 14px;
     }
 
-        .continent-list li {
-            grid-template-columns: 1fr auto;
-            gap: 0 12px;
-        }
-
-    .bar {
-        grid-column: 1 / -1;
-        grid-row: 2;
+    .world-globe {
+        aspect-ratio: 1 / 1;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .world-map .country {
+    .world-map .country,
+    .toggle-button {
         transition: none;
     }
 }

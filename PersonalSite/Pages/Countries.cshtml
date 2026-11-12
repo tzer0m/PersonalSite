@@ -17,24 +17,23 @@
         <p class="term-status"><span class="status-dot">•</span> <span class="stat">@Model.Visited.Count</span><span class="muted">/@Model.Total</span> countries &amp; territories <span class="frame">·</span> <span class="stat">@Model.Percent%</span> of the world</p>
     </header>
 
-    <div class="map-wrap">
-        @Html.Raw(Model.MapSvg)
+    <div class="map-wrap" data-visited="@Model.VisitedCodes" data-globe="@Url.Content("~/data/globe.json")">
+        <div class="map-view" data-view="2d">
+            @Html.Raw(Model.MapSvg)
+        </div>
+        <div class="map-view globe-view" data-view="3d" hidden>
+            <canvas class="world-globe" aria-label="Interactive globe of visited countries"></canvas>
+            <span class="globe-tip" hidden></span>
+        </div>
     </div>
 
-    <p class="legend">
-        <span class="legend-item"><span class="swatch swatch-visited"></span>visited <span class="muted">@Model.Visited.Count</span></span>
-        <span class="legend-item"><span class="swatch swatch-bucket"></span>bucket list <span class="muted">@Model.BucketList.Count</span></span>
-    </p>
-
-    <hr class="term-rule" />
-
-    <h2 class="group-label term-section">continents</h2>
-    <ul class="continent-list">
-        @foreach (ContinentSummary continent in Model.Continents)
-        {
-            <li><span class="continent-name">@continent.Name.ToLowerInvariant()</span><span class="bar"><span class="bar-filled">@continent.BarFilled</span><span class="frame">@continent.BarEmpty</span></span><span class="muted">@continent.Visited/@continent.Total</span></li>
-        }
-    </ul>
+    <div class="map-bar">
+        <p class="legend"><span class="swatch"></span>visited <span class="muted">@Model.Visited.Count</span></p>
+        <div class="map-toggle" role="group" aria-label="Map view">
+            <button type="button" class="toggle-button" data-map-view="2d" aria-pressed="true">2d map</button>
+            <button type="button" class="toggle-button" data-map-view="3d" aria-pressed="false">3d globe</button>
+        </div>
+    </div>
 
     <hr class="term-rule" />
 
@@ -45,21 +44,11 @@
             <li><span class="mark-visited">✓</span> <span class="muted">@country.Code</span> @country.Name</li>
         }
     </ul>
-
-    <hr class="term-rule" />
-
-    <h2 class="group-label term-section">bucket list</h2>
-    @if (Model.BucketList.Count == 0)
-    {
-        <p class="muted">nothing here yet</p>
-    }
-    else
-    {
-        <ul class="country-list">
-            @foreach (Country country in Model.BucketList)
-            {
-                <li><span class="mark-bucket">♥</span> <span class="muted">@country.Code</span> @country.Name</li>
-            }
-        </ul>
-    }
 </section>
+
+@section Scripts {
+    <script src="~/lib/d3/d3-array.min.js" asp-append-version="true"></script>
+    <script src="~/lib/d3/d3-geo.min.js" asp-append-version="true"></script>
+    <script src="~/lib/topojson/topojson-client.min.js" asp-append-version="true"></script>
+    <script src="~/js/countries.js" asp-append-version="true"></script>
+}

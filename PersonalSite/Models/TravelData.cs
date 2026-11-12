@@ -9,10 +9,5 @@ namespace PersonalSite.Models
         /// Codes of countries that have been visited.
         /// </summary>
         public List<string> Visited { get; set; } = [];
-
-        /// <summary>
-        /// Codes of countries on the bucket list.
-        /// </summary>
-        public List<string> BucketList { get; set; } = [];
     }
 }
