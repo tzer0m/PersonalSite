@@ -1,0 +1,65 @@
+﻿@page
+@using PersonalSite.Models
+@model CountriesModel
+@{
+    ViewData["Title"] = "Countries";
+}
+
+<style>
+    @Html.Raw(Model.MapStyles)
+</style>
+
+<section class="term">
+    <a class="link-row term-back" asp-page="/Index">&lt;- back</a>
+
+    <header class="term-header">
+        <h1 class="term-title">countries visited</h1>
+        <p class="term-status"><span class="status-dot">•</span> <span class="stat">@Model.Visited.Count</span><span class="muted">/@Model.Total</span> countries &amp; territories <span class="frame">·</span> <span class="stat">@Model.Percent%</span> of the world</p>
+    </header>
+
+    <div class="map-wrap">
+        @Html.Raw(Model.MapSvg)
+    </div>
+
+    <p class="legend">
+        <span class="legend-item"><span class="swatch swatch-visited"></span>visited <span class="muted">@Model.Visited.Count</span></span>
+        <span class="legend-item"><span class="swatch swatch-bucket"></span>bucket list <span class="muted">@Model.BucketList.Count</span></span>
+    </p>
+
+    <hr class="term-rule" />
+
+    <h2 class="group-label term-section">continents</h2>
+    <ul class="continent-list">
+        @foreach (ContinentSummary continent in Model.Continents)
+        {
+            <li><span class="continent-name">@continent.Name.ToLowerInvariant()</span><span class="bar"><span class="bar-filled">@continent.BarFilled</span><span class="frame">@continent.BarEmpty</span></span><span class="muted">@continent.Visited/@continent.Total</span></li>
+        }
+    </ul>
+
+    <hr class="term-rule" />
+
+    <h2 class="group-label term-section">visited</h2>
+    <ul class="country-list">
+        @foreach (Country country in Model.Visited)
+        {
+            <li><span class="mark-visited">✓</span> <span class="muted">@country.Code</span> @country.Name</li>
+        }
+    </ul>
+
+    <hr class="term-rule" />
+
+    <h2 class="group-label term-section">bucket list</h2>
+    @if (Model.BucketList.Count == 0)
+    {
+        <p class="muted">nothing here yet</p>
+    }
+    else
+    {
+        <ul class="country-list">
+            @foreach (Country country in Model.BucketList)
+            {
+                <li><span class="mark-bucket">♥</span> <span class="muted">@country.Code</span> @country.Name</li>
+            }
+        </ul>
+    }
+</section>
