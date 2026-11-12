@@ -3,6 +3,7 @@
     "AU",
     "AT",
     "CO",
+    "CN",
     "HR",
     "EG",
     "FR",
@@ -22,5 +23,6 @@
     "AE",
     "GB",
     "US"
-  ]
+  ],
+  "bucketList": []
 }

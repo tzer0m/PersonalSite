@@ -16,16 +16,6 @@ namespace PersonalSite.Pages
         public List<Country> Visited => atlas.Visited;
 
         /// <summary>
-        /// The total number of countries and territories.
-        /// </summary>
-        public int Total => atlas.Countries.Count;
-
-        /// <summary>
-        /// The percentage of countries visited.
-        /// </summary>
-        public int Percent => Total == 0 ? 0 : (int)Math.Round(Visited.Count * 100.0 / Total);
-
-        /// <summary>
         /// The world map SVG markup.
         /// </summary>
         public string MapSvg => atlas.MapSvg;

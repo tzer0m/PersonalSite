@@ -198,16 +198,6 @@ main {
     color: var(--color-accent);
 }
 
-.term-status {
-    margin: 0;
-    color: var(--color-text);
-}
-
-.stat {
-    color: var(--color-accent);
-    font-weight: 700;
-}
-
 .muted {
     color: var(--color-text-muted);
 }
@@ -292,28 +282,11 @@ main {
     transform: translate(12px, -50%);
 }
 
-/* Legend and view toggle */
+/* View toggle */
 .map-bar {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px 24px;
+    justify-content: flex-end;
     margin-top: 12px;
-}
-
-.legend {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-}
-
-.swatch {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background-color: var(--color-accent);
 }
 
 .map-toggle {

@@ -24,6 +24,7 @@
     }
 
     buttons.forEach(button => button.addEventListener("click", () => show(button.dataset.mapView)));
+    show(document.querySelector("[data-map-view][aria-pressed=\"true\"]")?.dataset.mapView ?? "3d");
 
     // Load the globe data and wire up drawing, spinning, dragging and hover.
     async function createGlobe() {
@@ -109,7 +110,7 @@
         function tick(time) {
             if (spinning && last !== null) {
                 const [lambda, phi] = projection.rotate();
-                projection.rotate([lambda + (time - last) * 0.006, phi]);
+                projection.rotate([lambda + (time - last) * 0.0025, phi]);
                 draw();
             }
             last = time;
